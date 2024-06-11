@@ -63,6 +63,55 @@ int CountSetbits(int n) {
     return cnt;
 }
 
+// Xor Property use 
+// (x ^ x) = 0
+// (x ^ 0) = x
+int UniqueIn2N_1(vector <int> vec) {
+    int XOR = 0;
+    for (int &i : vec) {
+        XOR ^= i;
+    }
+    return XOR;
+}
+
+pair <int, int> UniqueIn2N_2(vector <int> vec) {
+    int XOR = 0;
+    for (int &i : vec) {
+        XOR ^= i;
+    }
+
+    // finding leftmost setbit which only 
+    // one of two unique numbers will have
+    int mask = 0;
+    for (int i = 0; i < 32; i++) {
+        if (XOR & (1LL << i)) {
+            mask = (1LL << i);
+            break;
+        }
+    }
+
+    // getting one unique number by xoring
+    // only those numbers which have found bit
+    pair <int, int> ans = {-1, -1};
+    int tempXor = 0;
+    for (int &i : vec) {
+        if (i & (mask)) {
+            tempXor ^= i;
+        }
+    }
+
+    ans.first = tempXor;
+    ans.second = tempXor ^ XOR;
+    return ans;
+}
+
+// Use count bit array
+// if at any bit pos if sum % 3 != 0
+// then unique no has this bit
+int UniqueIn3N_1(vector <int> vec) {
+
+}
+
 void Solve () {
     // cout << IsOdd(1) << ' ' << IsOdd(2) << endl;
 
@@ -83,6 +132,10 @@ void Solve () {
     // cout << IsPowerOf4_2(16) << endl;
 
     // cout << CountSetbits(14) << endl;
+
+    // cout << UniqueIn2N_1({1, 8, 9, 2, 2, 9, 1});
+
+    // cout << UniqueIn2N_2({1, 8, 9, 2, 2, 9, 8, 7}).first << ' ' << UniqueIn2N_2({1, 8, 9, 2, 2, 9, 8, 7}).second << endl;
 
 }
 
